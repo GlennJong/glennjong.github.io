@@ -127,7 +127,7 @@ p {
   height: 40px;
   margin-top: 20px;
   margin-left: 20px;
-  z-index: 101;
+  z-index: 97;
 }
 .menu .line {
   width: 40px;
@@ -159,7 +159,7 @@ p {
   height: 100%;
   padding-top: 20%;
   background: hsla(0,0%,0%,.9);
-  z-index: 100;
+  z-index: 96;
 }
 .nav-mobile li {
   display: block;
@@ -173,13 +173,14 @@ p {
 @media(min-width:768px) {
   .menu {display:none;}
   .nav {display:block;}
+  .nav-mobile {display:none;}
 }
 /* content */
 .content {
   display: none;
   margin-top: 5%;
   margin-bottom: 40px;
-  z-index: 99;
+  z-index: 90;
 }
 .sub-content {
   clear: both;
@@ -422,7 +423,7 @@ p {
   background-color: hsla(180,50%,50%,1);
   text-align: right;
   transition: margin .2s ease-out;
-  z-index: 98;
+  z-index: 91;
 }
 .footer-mobile {
   margin: 0;
@@ -514,15 +515,18 @@ p {
   right: 40px;
   bottom: 30px;
   cursor: pointer;
-  z-index: 97;
+  z-index: 99;
 }
 .image-viewer .main-image {
   position: relative;
   height: 100%;
   margin: 0 auto;
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
   justify-content: center;
+  -webkit-justify-content: center;
 }
 @media(min-width:768px) {
   .main-image {width:750px;}
