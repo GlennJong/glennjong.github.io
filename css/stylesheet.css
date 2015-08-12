@@ -673,12 +673,12 @@ p {
   border-radius: 10px;
   box-sizing: border-box;
 }
-.article-viewer .article-content .main-article p:after {
+.article-viewer .main-article p:after {
   position: absolute;
   bottom: -26px;
   left: 50%;
   content: url('../img/tail.png');
 }
-.article-viewer .article-content .main-article img {
+.article-viewer .main-article img {
   max-width: 100%;
 }
