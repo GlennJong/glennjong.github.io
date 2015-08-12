@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$('.img img').lazyload({
+	$('img.lazyload').lazyload({
       effect : "fadeIn"
 	});
 	// menu function //
