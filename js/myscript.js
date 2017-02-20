@@ -9,9 +9,9 @@ function Progress (elem) {
     var total  = $elem.length;
     var finish = 0;
     $elem.one('load', loaded)
-            .each(chechCompleted)
+            .each(checkCompleted)
 
-    function chechCompleted() {
+    function checkCompleted() {
         if (this.complete) {
             loaded.call(this)
         }
@@ -76,6 +76,7 @@ function Parallax() {
     $(window).resize(function() {
         parallaxBase()
     });
+
     function run() {
         pointX = mouseX - centerX;
         pointY = mouseY - centerY;
@@ -92,13 +93,7 @@ function Parallax() {
         })
         requestAnimationFrame(run);
     }
-
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        return
-    }
-    else {
-        run()
-    }
+    run()
 }
 Parallax()
 
@@ -289,120 +284,132 @@ function lazyload(elem) {
     }).on('load', loadCheck)
 }
 
-// ModalBox
-ModalBox()
 
-// PictureView
-PictureView()
+$(document).ready(function() {
 
-// webView
-ProjectView()
+    // ModalBox
+    ModalBox()
 
-// Style Control
-$('#styleControl button').click(function() {
-    var target = $(this).attr('class')
-    $('body').attr('id', target)
-})
+    // PictureView
+    PictureView()
 
-// Nav Control
-$('.nav__btn').on('click', function() {
-	var target        = $(this).data('target'),
-        targetMain    = '#' + target,
-        $targetMain   = $(targetMain),
-        targetSubnav  = '.subnav-' + target
-        $targetSubnav = $(targetSubnav)
-	$('body, .main').addClass('open')
-	$targetSubnav.addClass('active')
-    var timer = setTimeout(function() {
-        $targetMain.addClass('active')
-        $('.subnav').addClass('open')
-        clearTimeout(timer)
-    }, 500)
+    // webView
+    ProjectView()
 
-    // lazyload
-    lazyload($targetMain)
-})
-$('#backControl').on('click', function() {
-	$('body, .main, .subnav').removeClass('open')
-    $('.intro, .section, .section__content, .subnav').removeClass('active')
-})
+    // Style Control
+    $('#styleControl').on('click','button', function() {
+        var target = $(this).attr('class')
 
-// SubNav Control
-$('#subnavClose').on('click', function() {
-    $('#subnav').toggleClass('active')
-})
-$('.sectionControl').on('click', function() {
-    var target  = '#' + $(this).data('target'),
-        $target = $(target)
-    $('.sectionControl, #subnav, .section').removeClass('active')
+        $('body').attr('id', target)
 
-    var timer = setTimeout(function() {
-        $target.addClass('active')
-        clearTimeout(timer)
-    }, 300)
-
-    $(this).addClass('active')
-
-    // lazyload
-    lazyload($target)
-})
-
-// Bubble Control
-$('.bubbleControl').on('click', function() {
-    if ($(this).hasClass('active')) {
-        $(this).removeClass('active')
-        $(this).siblings('.bubble').addClass('hide')
-
-    }
-    else {
-        $('.bubbleControl').removeClass('active')
-        $('.bubble').addClass('hide')
-        $(this).addClass('active')
-        $(this).siblings('.bubble').removeClass('hide')
-    }
-})
-
-// Tabs
-$('.tab button').on('click', function() {
-    var tabTarget  = $(this).data('tab'),
-        $tabTarget = $(tabTarget)
-
-    if ($(this).hasClass('active')) {
-        return
-    }
-    else {
-        $('.tab button, .tab-content').removeClass('active');
-        $(this).addClass('active')
-        $tabTarget.addClass('active')
-    }
-})
-
-// Web Control
-$('.projectControl').on('click', function() {
-    var projectTarget   = $(this).attr('href'),
-        $projectTarget  = $(projectTarget)
-
-    $('.projectView').addClass('active')
-    $projectTarget.addClass('active')
-
-    // lazyload
-    lazyload($projectTarget)
-})
-
-// illustration delay
-function itemDelay() {
-    $item = $('.section').find('.item')
-    $item.each(function() {
-        var itemNum = $(this).index() * 0.1
-        $(this).css('animation-delay', itemNum + 's')
+        // Parallax
+        $('.parallax .parallax__item').removeClass('active')
+        var colorClass = '.' + target,
+            $colorClass = $(colorClass)
+        $('.parallax').find($colorClass).addClass('active')
     })
-}
-itemDelay()
 
-// about
-$('.boardControl button').click(function() {
-    var target = $(this).data('target')
-    $('.board--content__item, .board--mask div').removeClass('active')
-    $('.board--content').find(target).addClass('active')
-    $('.board--mask').find(target).addClass('active')
+    // Nav Control
+    $('.nav__btn').on('click', function() {
+      var target        = $(this).data('target'),
+            targetMain    = '#' + target,
+            $targetMain   = $(targetMain),
+            targetSubnav  = '.subnav-' + target
+            $targetSubnav = $(targetSubnav)
+      $('.main').addClass('open')
+      $targetSubnav.addClass('active')
+        var timer = setTimeout(function() {
+            $targetMain.addClass('active')
+            $('.subnav').addClass('open')
+            clearTimeout(timer)
+        }, 500)
+
+        // lazyload
+        lazyload($targetMain)
+    })
+
+    $('#backControl').on('click', function() {
+      $('body, .main, .subnav').removeClass('open')
+      $('.intro, .section, .section__content, .subnav').removeClass('active')
+    })
+
+    // SubNav Control
+    $('#subnavClose').on('click', function() {
+        $('#subnav').toggleClass('active')
+    })
+    $('.sectionControl').on('click', function() {
+        var target  = '#' + $(this).data('target'),
+            $target = $(target)
+        $('.sectionControl, #subnav, .section, .section__content').removeClass('active')
+        $target.addClass('active')
+
+        setTimeout(function() {
+            $target.find('.section__content').addClass('active')
+        }, 300)
+
+        $(this).addClass('active')
+
+        // lazyload
+        lazyload($target)
+    })
+
+    // Bubble Control
+    $('.bubbleControl').on('click', function() {
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active')
+            $(this).siblings('.bubble').addClass('hide')
+
+        }
+        else {
+            $('.bubbleControl').removeClass('active')
+            $('.bubble').addClass('hide')
+            $(this).addClass('active')
+            $(this).siblings('.bubble').removeClass('hide')
+        }
+    })
+
+    // Tabs
+    $('.tab button').on('click', function() {
+        var tabTarget  = $(this).data('tab'),
+            $tabTarget = $(tabTarget)
+
+        if ($(this).hasClass('active')) {
+            return
+        }
+        else {
+            $('.tab button, .tab-content').removeClass('active');
+            $(this).addClass('active')
+            $tabTarget.addClass('active')
+        }
+    })
+
+    // Web Control
+    $('.projectControl').on('click', function() {
+        var projectTarget   = $(this).attr('href'),
+            $projectTarget  = $(projectTarget)
+
+        $('.projectView').addClass('active')
+        $projectTarget.addClass('active')
+
+        // lazyload
+        lazyload($projectTarget)
+    })
+
+    // illustration delay
+    function itemDelay() {
+        $item = $('.section').find('.item')
+        $item.each(function() {
+            var itemNum = $(this).index() * 0.1
+            $(this).css('animation-delay', itemNum + 's')
+        })
+    }
+    itemDelay()
+
+    // about
+    $('.boardControl button').click(function() {
+        var target = $(this).data('target')
+        $('.board--content__item, .board--mask div').removeClass('active')
+        $('.board--content').find(target).addClass('active')
+        $('.board--mask').find(target).addClass('active')
+    })
 })
